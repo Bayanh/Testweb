@@ -1,41 +1,20 @@
-name: Build App Android va iOS
+name: security_pass_app
+description: Ung dung the bao mat
+publish_to: 'none'
+version: 1.0.0+1
 
-on:
-  push:
-    branches: [ "main" ]
+environment:
+  sdk: '>=3.0.0 <4.0.0'
 
-jobs:
-  build:
-    runs-on: macos-latest
+dependencies:
+  flutter:
+    sdk: flutter
+  # Thư viện để tạo mã QR
+  qr_flutter: ^4.1.0
 
-    steps:
-      - name: 1. Lay ma nguon tu kho
-        uses: actions/checkout@v3
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
-      - name: 2. Cai dat moi truong Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: 3. Tai cac thu vien can thiet
-        run: flutter pub get
-
-      - name: 4. Build file APK (Android)
-        run: flutter build apk --release
-
-      - name: 5. Build file iOS (Chua ky)
-        run: flutter build ios --release --no-codesign
-
-      - name: 6. Dong goi thanh file IPA
-        run: |
-          mkdir -p Payload
-          mv build/ios/iphoneos/Runner.app Payload/
-          zip -r app-security.ipa Payload
-
-      - name: 7. Luu tru file de tai ve
-        uses: actions/upload-artifact@v3
-        with:
-          name: App-Releases
-          path: |
-            build/app/outputs/flutter-apk/app-release.apk
-            app-security.ipa
+flutter:
+  uses-material-design: true
