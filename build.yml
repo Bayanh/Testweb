@@ -17,7 +17,7 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: 3. Tai cac thu vien can thiet (Pub get)
+      - name: 3. Tai cac thu vien can thiet
         run: flutter pub get
 
       - name: 4. Build file APK (Android)
@@ -30,12 +30,12 @@ jobs:
         run: |
           mkdir -p Payload
           mv build/ios/iphoneos/Runner.app Payload/
-          zip -r app-cua-toi.ipa Payload
+          zip -r app-security.ipa Payload
 
       - name: 7. Luu tru file de tai ve
         uses: actions/upload-artifact@v3
         with:
-          name: UngDung-Releases
+          name: App-Releases
           path: |
             build/app/outputs/flutter-apk/app-release.apk
-            app-cua-toi.ipa
+            app-security.ipa
