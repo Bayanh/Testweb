@@ -17,22 +17,26 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: 3. Tai cac thu vien can thiet
+      # BƯỚC MỚI THÊM VÀO: Yêu cầu tự động tạo khung xương Android/iOS bị thiếu
+      - name: 3. Khoi tao cac thu muc Android va iOS bi thieu
+        run: flutter create --org com.leanhbay .
+
+      - name: 4. Tai cac thu vien can thiet
         run: flutter pub get
 
-      - name: 4. Build file APK (Android)
+      - name: 5. Build file APK (Android)
         run: flutter build apk --release
 
-      - name: 5. Build file iOS (Chua ky)
+      - name: 6. Build file iOS (Chua ky)
         run: flutter build ios --release --no-codesign
 
-      - name: 6. Dong goi thanh file IPA
+      - name: 7. Dong goi thanh file IPA
         run: |
           mkdir -p Payload
           mv build/ios/iphoneos/Runner.app Payload/
           zip -r app-security.ipa Payload
 
-      - name: 7. Luu tru file de tai ve
+      - name: 8. Luu tru file de tai ve
         uses: actions/upload-artifact@v4
         with:
           name: App-Releases
